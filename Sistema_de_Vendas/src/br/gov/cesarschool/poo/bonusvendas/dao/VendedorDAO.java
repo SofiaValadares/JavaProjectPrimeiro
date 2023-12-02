@@ -1,75 +1,40 @@
 package br.gov.cesarschool.poo.bonusvendas.dao;
 
-import java.io.Serializable;
-import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
 
 public class VendedorDAO {
 	
-    private static final String BRANCO = "";
-    private CadastroObjetos cadastro = new CadastroObjetos(Vendedor.class);
-    
-    public boolean incluir (Vendedor cpf) {
-    	
-    	Vendedor prodBusca = buscar(cpf.getCpf()); 
-    	
-		if (prodBusca != null) { 
-			
+	private DAOGenerico<Vendedor> dao;
+
+    public VendedorDAO() {
+        dao = new DAOGenerico<>(Vendedor.class);
+
+	}
+
+	public boolean incluir(Vendedor vend) {
+		String idUnico = vend.getIdUnico();
+		Vendedor vendBusca = buscar(idUnico);  
+		if (vendBusca != null) { 
 			return false;
-		} 
-		
-		else {
-			
-			cadastro.incluir(cpf, BRANCO + cpf.getCpf());
+		} else {
+			dao.incluir(vend);
 			return true;
-		}
-    }
-    
-    public boolean excluir(Vendedor cpf) {
-    	Vendedor prodBusca = buscar(cpf.getCpf()); 
-    	
-    	 if (prodBusca == null) {
-    		 
-	        return false;
-	    }
-    	 else {
-    		 
-	        cadastro.excluir(BRANCO + cpf.getCpf());
-	        return true;
-	    }
-    }
-    
-    public boolean alterar(Vendedor cpf) {
-    	
-    	Vendedor prodBusca = buscar(cpf.getCpf());
-		
-		if (prodBusca == null) {
+		}		 
+	}
+	public boolean alterar(Vendedor vend) {
+		String idUnico = vend.getIdUnico();
+		Vendedor vendBusca = buscar(idUnico);
+		if (vendBusca == null) {
 			return false;
-		} 
-		
-		else {
-			
-			cadastro.alterar(cpf, BRANCO + cpf.getCpf());
+		} else {
+			dao.alterar(vend);
 			return true;
 		}		
 	}
-    
 	public Vendedor buscar(String cpf) {
-		
-		return (Vendedor)cadastro.buscar(BRANCO + cpf);
+		return dao.buscar(cpf);
 	}
-	
 	public Vendedor[] buscarTodos() {
-		
-		Serializable[] rets = cadastro.buscarTodos(Vendedor.class);
-		
-		Vendedor[] prods = new Vendedor[rets.length];
-		
-		for(int i=0; i<rets.length; i++) {
-
-			prods[i] = (Vendedor)rets[i];
-		}
-		
-		return prods;
-	} 
+		return dao.buscarTodos();
+	}
 }

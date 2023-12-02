@@ -1,4 +1,4 @@
-package br.gov.cesarschool.poo.bonusvendas.negocio;
+package br.gov.cesarschool.poo.bonusvendas.negociov2;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,6 +14,8 @@ import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusCredito;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusDebito;
 import br.gov.cesarschool.poo.bonusvendas.entidade.TipoResgate;
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
+import br.gov.cesarschool.poo.bonusvendas.negocio.ComparadorCaixaDeBonusSaldoDec;
+import br.gov.cesarschool.poo.bonusvendas.negocio.ComparadorLancamentoBonusDHDec;
 import br.gov.cesarschool.poo.bonusvendas.util.Ordenadora;
 
 

@@ -1,80 +1,46 @@
 package br.gov.cesarschool.poo.bonusvendas.dao;
 
-
-import br.gov.cesarschool.poo.bonusvendas.entidade.*;
-
-import java.io.Serializable;
-
-import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
+import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
 
 public class CaixaDeBonusDAO {
-	
-    private static final String BRANCO = "";
-    private CadastroObjetos cadastro = new CadastroObjetos(CaixaDeBonus.class);
-    
-	public boolean incluir(CaixaDeBonus prod) {
-		
-		CaixaDeBonus prodBusca = buscar(prod.getNumero()); 
-		
-		if (prodBusca != null) {
-				
+
+	private DAOGenerico<CaixaDeBonus> dao;
+
+    public CaixaDeBonusDAO() {
+        dao = new DAOGenerico<>(CaixaDeBonus.class);
+    }
+
+	public boolean incluir(CaixaDeBonus caixaBonus) {
+		String idUnico = caixaBonus.getIdUnico();
+		CaixaDeBonus caixaBonusBusca = buscar(Long.parseLong(idUnico));  
+		if (caixaBonusBusca != null) { 
 			return false;
-		} 
-		
-		else {
-			
-			cadastro.incluir(prod, BRANCO + prod.getNumero());
+		} else {
+			dao.incluir(caixaBonus);
 			return true;
 		}		 
 	}
-	
-	public boolean excluir(CaixaDeBonus prod) {
-		CaixaDeBonus prodBusca = buscar(prod.getNumero()); 
-    	
-    	 if (prodBusca == null) {
-    		 
-	        return false;
-	    }
-    	 else {
-    		 
-	        cadastro.excluir(BRANCO + prod.getNumero());
-	        return true;
-	    }
-    }
-	
-	public boolean alterar(CaixaDeBonus prod) {
-			
-		CaixaDeBonus prodBusca = buscar(prod.getNumero());
-		if (prodBusca == null) {
-			
+	public boolean alterar(CaixaDeBonus caixaBonus) {
+		String idUnico = caixaBonus.getIdUnico();
+		CaixaDeBonus caixaBonusBusca = buscar(Long.parseLong(idUnico));
+		if (caixaBonusBusca == null) {
 			return false;
-		} 
-		
-		else {
-			
-			cadastro.alterar(prod, BRANCO + prod.getNumero());
+		} else {
+			dao.alterar(caixaBonus);
 			return true;
 		}		
 	}
-
-	public CaixaDeBonus buscar(long numeros) {
-		
-		// Esta operação entre () vai ter significado mais à frente!
-		return (CaixaDeBonus)cadastro.buscar(BRANCO + numeros);
+	
+	
+	
+	
+	public CaixaDeBonus buscar(long codigo) {
+		return dao.buscar(String.valueOf(codigo));
 	}
 	
 	public CaixaDeBonus[] buscarTodos() {
-		
-		Serializable[] rets = cadastro.buscarTodos(CaixaDeBonus.class);
-		CaixaDeBonus[] prods = new CaixaDeBonus[rets.length];
-		
-		for(int i=0; i<rets.length; i++) {
-			
-			// Esta operação entre () vai ter significado mais à frente! 
-			prods[i] = (CaixaDeBonus)rets[i];
-		}
-		
-		return prods;
+		return dao.buscarTodos();
 	} 
+
 
 }
